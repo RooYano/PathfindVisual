@@ -18,6 +18,10 @@ class Queue {
 let startCol = new Node(0);
 let startRow = new Node(0);
 
+//queue
+let nextCol = new Queue(startCol);
+let nextRow = new Queue(startRow); 
+
 Queue.prototype.enqueue = function (data){
     let nodeAdd = new Node(data);
 
@@ -26,7 +30,6 @@ Queue.prototype.enqueue = function (data){
         this.head = nodeAdd;
         return this.head;
     }
-
 
     //i can optimize this later
     let tail = this.head;
@@ -38,17 +41,30 @@ Queue.prototype.enqueue = function (data){
     return this.head
 }
 
+Queue.prototype.dequeue = function () {
+    let current = this.head;
+
+    if(current) {
+        let elm = current.val;
+        current = current.next;
+        this.head = current;
+
+        return elm;
+    }
+    console.log("queue empty");
+    return null;
+}
 /*test code
 
 startCol;
 nextCol.enqueue(3);
 nextCol.enqueue(4);
+let storage = nextCol.dequeue();
+console.log(storage)
+
 
 */
 
-//queue
-let nextCol = new Queue(startCol);
-let nextRow = new Queue(startRow); 
 
 //counter variables for steps taken
 let totalMoves = 0;
