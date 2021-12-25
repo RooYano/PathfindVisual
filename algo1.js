@@ -12,6 +12,7 @@ class Node {
 class Queue {
     constructor(head = null) {
         this.head = head;
+        this.size = 1; // start size is one because we start off with starting node already in Q
     }
 }
 
@@ -38,6 +39,8 @@ Queue.prototype.enqueue = function (data){
     }
     tail.next = nodeAdd;
 
+    this.size++;
+
     return this.head
 }
 
@@ -48,6 +51,7 @@ Queue.prototype.dequeue = function () {
         let elm = current.val;
         current = current.next;
         this.head = current;
+        this.size--;
 
         return elm;
     }
