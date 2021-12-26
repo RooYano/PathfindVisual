@@ -1,6 +1,11 @@
 let row = 5;
 let col = 5;
-let m = []; //nested array for matrix to create a grid of size row x col
+var m = new Array(row); //nested array for matrix to create a grid of size row x col
+for(let cl = 0; cl < col; cl++){
+    m[cl] = new Array(col);
+}
+m[4][3]= 'End';
+console.log(m);
 
 class Node {
     constructor(value){
@@ -16,8 +21,11 @@ class Queue {
     }
 }
 
-let startCol = new Node(0);
-let startRow = new Node(0);
+let startPosCol = 0;
+let startPosRow = 0;
+
+let startCol = new Node(startPosCol);
+let startRow = new Node(startPosRow);
 
 //queue
 let nextCol = new Queue(startCol);
@@ -79,12 +87,90 @@ let nodesNext = 1; //
 let reachedEnd = false;
 
 //boolean matrix to keep track of visited cells
-let visited = [];
+let visited = new Array (row);
+for (let v = 0; v < col; v++){
+    visited[v]=new Array(col);
+}
 
 //vectors for direction when determining neighbors
 deltaRow = [-1, 1, 0, 0];
 deltaCol = [0, 0, 1, -1];
 
 function findPath(){
+    visited[startPosCol][startPosRow] = true;
 
+    console.log(nextRow.size);
+
+    while (nextRow.size > 0||nextCol.size >0){
+        r = nextRow.dequeue();
+        c = nextCol.dequeue();
+        console.log(nextRow.size);
+        console.log(`R is ${r} and c is ${c} and m[r][c] gives ${m[r][c]}`);
+        if (m[r][c]  == 'End') {
+            reachedEnd = true;
+            console.log("end reached");
+            break;
+        }
+        exploreNeighbor(r,c); 
+        nodesLeft--;
+        if(nodesLeft==0){
+            nodesLeft = nodesNext;
+            nodesNext=0;
+            totalMoves++;
+        }
+    }
+    
+    if(reachedEnd==true){
+            console.log("reachedEnd container");
+            return totalMoves;
+    }
+
+    return -1;
+} 
+
+function exploreNeighbor (r, c){
+    for (let i = 0; i < 4; i++) {
+        neighborR = r + deltaRow[i];
+        neighborC = c + deltaCol[i];
+        console.log(`neighborR is ${neighborR} and neighbor C is ${neighborC}`);
+
+        if(neighborR < 0 || neighborC < 0){
+            console.log("escaped at 1");
+            continue;
+        }
+
+        if(neighborR >= row || neighborC >= col){
+            console.log("escaped at 2");
+            continue;
+        }
+
+        if (visited[neighborR][neighborC] == true) {
+            console.log("escaped at 3");
+            continue;
+        }
+
+        if(m[neighborR][neighborC]=='W') { // W for wall
+            continue;
+        }
+
+        nextRow.enqueue(neighborR);
+        nextCol.enqueue(neighborC);
+        console.log(`next Row queued up is ${nextRow.head.val}`);
+        visited[neighborR][neighborC]= true;
+
+        nodesNext++;
+    }
 }
+
+function printVisited (){
+    for (let i = 0; i< row; i++){
+        for (let j = 0; j<col; j++){
+            if(visited[i][j]==true){
+                console.log(`coordinate x:${i} y:${j} traveled thru`);
+            }
+        }
+    }
+}
+
+findPath();
+printVisited();
