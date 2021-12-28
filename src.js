@@ -10,14 +10,14 @@ function makeGrid (rows, cols) {
     container.style.setProperty("--grid-cols", cols);
     for (i = 0; i < (rows * cols); i++) {
         let cell = document.createElement("div");
-        cell.id = i + 1;
+        cell.id = i;
         //cell.innerText = (i + 1);
     container.appendChild(cell).className = "grid-item";
     }
 }
 
-let startNode = 355;
-let targetNode = 380;
+let startNode = 5;
+let targetNode = 5;
 
 
 makeGrid(availRows,availCols);

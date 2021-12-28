@@ -1,11 +1,26 @@
-let row = 5;
-let col = 5;
+let row = availRows;
+let col = availCols;
+
 var m = new Array(row); //nested array for matrix to create a grid of size row x col
 for(let cl = 0; cl < col; cl++){
     m[cl] = new Array(col);
 }
-m[4][3]= 'End';
-console.log(m);
+
+let coordinate = [];
+
+// returns array with x and y coordinate [x,y] using ID value
+function idToXY (id) {
+    coordinate = [0,0]; // reset array to 0
+    coordinate[0] = id % 19;
+    coordinate[1] = Math.floor(id / (availCols));
+
+    return coordinate;
+}
+
+let startCoordinate = idToXY(startNode);
+let startCol = startCoordinate[0];
+let startRow = startCoordinate[1];
+m[startCol][startRow]= 'End';
 
 class Node {
     constructor(value){
@@ -21,15 +36,12 @@ class Queue {
     }
 }
 
-let startPosCol = 0;
-let startPosRow = 0;
-
-let startCol = new Node(startPosCol);
-let startRow = new Node(startPosRow);
+let startColNode = new Node(startCol);
+let startRowNode = new Node(startRow);
 
 //queue
-let nextCol = new Queue(startCol);
-let nextRow = new Queue(startRow); 
+let nextCol = new Queue(startColNode);
+let nextRow = new Queue(startRowNode); 
 
 Queue.prototype.enqueue = function (data){
     let nodeAdd = new Node(data);
@@ -66,17 +78,14 @@ Queue.prototype.dequeue = function () {
     console.log("queue empty");
     return null;
 }
-/*test code
 
+/*test code
 startCol;
 nextCol.enqueue(3);
 nextCol.enqueue(4);
 let storage = nextCol.dequeue();
 console.log(storage)
-
-
 */
-
 
 //counter variables for steps taken
 let totalMoves = 0;
@@ -97,16 +106,14 @@ deltaRow = [-1, 1, 0, 0];
 deltaCol = [0, 0, 1, -1];
 
 function findPath(){
-    visited[startPosCol][startPosRow] = true;
-
-    console.log(nextRow.size);
+    visited[startCol][startRow] = true;
 
     while (nextRow.size > 0||nextCol.size >0){
         r = nextRow.dequeue();
         c = nextCol.dequeue();
         console.log(nextRow.size);
-        console.log(`R is ${r} and c is ${c} and m[r][c] gives ${m[r][c]}`);
-        if (m[r][c]  == 'End') {
+        console.log(`R is ${r} and c is ${c} and m[r][c] gives ${m[c][r]}`);
+        if (m[c][r]  == 'End') {
             reachedEnd = true;
             console.log("end reached");
             break;
@@ -156,7 +163,7 @@ function exploreNeighbor (r, c){
         nextRow.enqueue(neighborR);
         nextCol.enqueue(neighborC);
         console.log(`next Row queued up is ${nextRow.head.val}`);
-        visited[neighborR][neighborC]= true;
+        visited[neighborC][neighborR]= true;
 
         nodesNext++;
     }
@@ -173,4 +180,4 @@ function printVisited (){
 }
 
 findPath();
-printVisited();
+// printVisited();
