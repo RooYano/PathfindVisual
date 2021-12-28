@@ -20,7 +20,12 @@ function idToXY (id) {
 let startCoordinate = idToXY(startNode);
 let startCol = startCoordinate[0];
 let startRow = startCoordinate[1];
-m[startCol][startRow]= 'End';
+
+let endCoordinate = idToXY(targetNode);
+let endCol = endCoordinate[0];
+let endRow = endCoordinate[1];
+
+m[endCol][endRow]= 'End';
 
 class Node {
     constructor(value){
@@ -42,6 +47,20 @@ let startRowNode = new Node(startRow);
 //queue
 let nextCol = new Queue(startColNode);
 let nextRow = new Queue(startRowNode); 
+
+//counter variables for steps taken
+let totalMoves = 0;
+let nodesLeft = 0; //adding nodes to check like peels of an onion. shows how many to dequeue before moving to next layer
+let nodesNext = 1; //
+
+//end  reached?
+let reachedEnd = false;
+
+//boolean matrix to keep track of visited cells
+let visited = new Array (row);
+for (let v = 0; v < col; v++){
+    visited[v]=new Array(col);
+}
 
 Queue.prototype.enqueue = function (data){
     let nodeAdd = new Node(data);
@@ -79,28 +98,6 @@ Queue.prototype.dequeue = function () {
     return null;
 }
 
-/*test code
-startCol;
-nextCol.enqueue(3);
-nextCol.enqueue(4);
-let storage = nextCol.dequeue();
-console.log(storage)
-*/
-
-//counter variables for steps taken
-let totalMoves = 0;
-let nodesLeft = 0; //adding nodes to check like peels of an onion. shows how many to dequeue before moving to next layer
-let nodesNext = 1; //
-
-//end  reached?
-let reachedEnd = false;
-
-//boolean matrix to keep track of visited cells
-let visited = new Array (row);
-for (let v = 0; v < col; v++){
-    visited[v]=new Array(col);
-}
-
 //vectors for direction when determining neighbors
 deltaRow = [-1, 1, 0, 0];
 deltaCol = [0, 0, 1, -1];
@@ -112,7 +109,7 @@ function findPath(){
         r = nextRow.dequeue();
         c = nextCol.dequeue();
         console.log(nextRow.size);
-        console.log(`R is ${r} and c is ${c} and m[r][c] gives ${m[c][r]}`);
+        console.log(`R is ${r} and c is ${c} and m[c][r] gives ${m[c][r]}`);
         if (m[c][r]  == 'End') {
             reachedEnd = true;
             console.log("end reached");
@@ -151,7 +148,7 @@ function exploreNeighbor (r, c){
             continue;
         }
 
-        if (visited[neighborR][neighborC] == true) {
+        if (visited[neighborC][neighborR] == true) {
             console.log("escaped at 3");
             continue;
         }

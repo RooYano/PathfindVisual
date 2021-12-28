@@ -16,8 +16,8 @@ function makeGrid (rows, cols) {
     }
 }
 
-let startNode = 5;
-let targetNode = 5;
+let startNode = 0;
+let targetNode = 10;
 
 
 makeGrid(availRows,availCols);
