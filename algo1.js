@@ -1,12 +1,12 @@
 let row = availRows;
 let col = availCols;
-let coordinate = [];
 
 var m = new Array(row); //nested array for matrix to create a grid of size row x col
 for(let cl = 0; cl < col; cl++){
     m[cl] = new Array(col);
 }
 
+//function for id to XY in src.js file
 let startCoordinate = idToXY(startNode);
 let startCol = startCoordinate[0];
 let startRow = startCoordinate[1];
@@ -33,15 +33,6 @@ let deltaCol = [0, 0, 1, -1];
 let visited = new Array (row);
 for (let v = 0; v < col; v++){
     visited[v]=new Array(col);
-}
-
-// returns array with x and y coordinate [x,y] using ID value
-function idToXY (id) {
-    coordinate = [0,0]; // reset array to 0
-    coordinate[0] = id % availRows;
-    coordinate[1] = Math.floor(id / (availCols));
-
-    return coordinate;
 }
 
 class Node {

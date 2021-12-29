@@ -16,6 +16,16 @@ function makeGrid (rows, cols) {
     }
 }
 
+// returns array with x and y coordinate [x,y] using ID value
+let coordinate = [];
+function idToXY (id) {
+    coordinate = [0,0]; // reset array to 0
+    coordinate[0] = id % availRows;
+    coordinate[1] = Math.floor(id / (availCols));
+
+    return coordinate;
+}
+
 let startNode = 0;
 let targetNode = 10;
 
