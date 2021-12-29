@@ -2,3 +2,8 @@ https://towardsdatascience.com/graph-theory-bfs-shortest-path-problem-on-a-grid-
     -Plan:
         -timed runs of the first and second state suggested by website (single Queueueueuue vs multiple queueue) 
         -
+
+
+    -some notes:
+        -move variables that can be reused to one source .js so i can add different algos
+        

@@ -1,20 +1,10 @@
 let row = availRows;
 let col = availCols;
+let coordinate = [];
 
 var m = new Array(row); //nested array for matrix to create a grid of size row x col
 for(let cl = 0; cl < col; cl++){
     m[cl] = new Array(col);
-}
-
-let coordinate = [];
-
-// returns array with x and y coordinate [x,y] using ID value
-function idToXY (id) {
-    coordinate = [0,0]; // reset array to 0
-    coordinate[0] = id % 19;
-    coordinate[1] = Math.floor(id / (availCols));
-
-    return coordinate;
 }
 
 let startCoordinate = idToXY(startNode);
@@ -26,6 +16,33 @@ let endCol = endCoordinate[0];
 let endRow = endCoordinate[1];
 
 m[endCol][endRow]= 'End';
+
+//counter variables for steps taken
+let totalMoves = 0;
+let nodesLeft = 0; //adding nodes to check like peels of an onion. shows how many to dequeue before moving to next layer
+let nodesNext = 1; //
+
+//end  reached?
+let reachedEnd = false;
+
+//vectors for direction when determining neighbors
+let deltaRow = [-1, 1, 0, 0];
+let deltaCol = [0, 0, 1, -1];
+
+//boolean matrix to keep track of visited cells
+let visited = new Array (row);
+for (let v = 0; v < col; v++){
+    visited[v]=new Array(col);
+}
+
+// returns array with x and y coordinate [x,y] using ID value
+function idToXY (id) {
+    coordinate = [0,0]; // reset array to 0
+    coordinate[0] = id % 19;
+    coordinate[1] = Math.floor(id / (availCols));
+
+    return coordinate;
+}
 
 class Node {
     constructor(value){
@@ -47,20 +64,6 @@ let startRowNode = new Node(startRow);
 //queue
 let nextCol = new Queue(startColNode);
 let nextRow = new Queue(startRowNode); 
-
-//counter variables for steps taken
-let totalMoves = 0;
-let nodesLeft = 0; //adding nodes to check like peels of an onion. shows how many to dequeue before moving to next layer
-let nodesNext = 1; //
-
-//end  reached?
-let reachedEnd = false;
-
-//boolean matrix to keep track of visited cells
-let visited = new Array (row);
-for (let v = 0; v < col; v++){
-    visited[v]=new Array(col);
-}
 
 Queue.prototype.enqueue = function (data){
     let nodeAdd = new Node(data);
@@ -97,10 +100,6 @@ Queue.prototype.dequeue = function () {
     console.log("queue empty");
     return null;
 }
-
-//vectors for direction when determining neighbors
-deltaRow = [-1, 1, 0, 0];
-deltaCol = [0, 0, 1, -1];
 
 function findPath(){
     visited[startCol][startRow] = true;
