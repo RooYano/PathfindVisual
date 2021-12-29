@@ -22,7 +22,7 @@ function makeGrid (rows, cols) {
 let coordinate = [];
 function idToXY (id) {
     coordinate = [0,0]; // reset array to 0
-    coordinate[0] = id % availRows;
+    coordinate[0] = id % availCols;
     coordinate[1] = Math.floor(id / (availCols));
 
     return coordinate;
@@ -35,12 +35,28 @@ function xYtoID(x,y){
     return id;
 }
 
-let startNode = 0;
-let targetNode = 10;
+let startNode = 50;
+let targetNode = 100;
 
 makeGrid(availRows,availCols);
 
-const colorStartNode = () => {document.getElementById(startNode).setAttribute("node-type","start")};
+const colorStartNode = () => {document.getElementById(startNode).classList.add('start')};
+const colorEndNode = () => {document.getElementById(targetNode).classList.add('end')}
 
 colorStartNode();
+colorEndNode();
+
+function visualTransition (array){
+    for (let i = 0;i < array.length; i++){
+        (function(index){
+            setTimeout(function(){document.getElementById(array[i]).classList.add('circle')},50+(50*index))
+        })(i)
+    }
+        // const a = (index) =>{
+        //     let container = document.getElementById(cells);
+        //     container.classList.add('circle');
+        // }
+        // a();
+        //setTimeout(a,500);
+}
 debugger;

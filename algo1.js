@@ -116,6 +116,7 @@ function findPath(){
     
     if(reachedEnd==true){
             //console.log("reachedEnd container");
+            colorEndNode();
 
             return totalMoves;
     }
@@ -170,5 +171,6 @@ function printVisited (){
 }
 
 findPath();
+visualTransition(arrayColorize);
 
 // printVisited();
