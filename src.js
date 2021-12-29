@@ -24,3 +24,4 @@ makeGrid(availRows,availCols);
 const colorStartNode = () => {document.getElementById(startNode).setAttribute("node-type","start")};
 
 colorStartNode();
+//debugger;

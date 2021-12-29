@@ -19,7 +19,7 @@ m[endCol][endRow]= 'End';
 
 //counter variables for steps taken
 let totalMoves = 0;
-let nodesLeft = 0; //adding nodes to check like peels of an onion. shows how many to dequeue before moving to next layer
+let nodesLeft = 1; //adding nodes to check like peels of an onion. shows how many to dequeue before moving to next layer
 let nodesNext = 1; //
 
 //end  reached?
@@ -38,7 +38,7 @@ for (let v = 0; v < col; v++){
 // returns array with x and y coordinate [x,y] using ID value
 function idToXY (id) {
     coordinate = [0,0]; // reset array to 0
-    coordinate[0] = id % 19;
+    coordinate[0] = id % availRows;
     coordinate[1] = Math.floor(id / (availCols));
 
     return coordinate;
@@ -130,7 +130,7 @@ function findPath(){
 
     return -1;
 } 
-
+ 
 function exploreNeighbor (r, c){
     for (let i = 0; i < 4; i++) {
         neighborR = r + deltaRow[i];
@@ -176,4 +176,5 @@ function printVisited (){
 }
 
 findPath();
+
 // printVisited();
