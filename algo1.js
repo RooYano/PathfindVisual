@@ -98,11 +98,11 @@ function findPath(){
     while (nextRow.size > 0||nextCol.size >0){
         r = nextRow.dequeue();
         c = nextCol.dequeue();
-        console.log(nextRow.size);
-        console.log(`R is ${r} and c is ${c} and m[c][r] gives ${m[c][r]}`);
+        //console.log(nextRow.size);
+        //console.log(`R is ${r} and c is ${c} and m[c][r] gives ${m[c][r]}`);
         if (m[c][r]  == 'End') {
             reachedEnd = true;
-            console.log("end reached");
+            //console.log("end reached");
             break;
         }
         exploreNeighbor(r,c); 
@@ -115,7 +115,8 @@ function findPath(){
     }
     
     if(reachedEnd==true){
-            console.log("reachedEnd container");
+            //console.log("reachedEnd container");
+
             return totalMoves;
     }
 
@@ -126,20 +127,20 @@ function exploreNeighbor (r, c){
     for (let i = 0; i < 4; i++) {
         neighborR = r + deltaRow[i];
         neighborC = c + deltaCol[i];
-        console.log(`neighborR is ${neighborR} and neighbor C is ${neighborC}`);
+        //console.log(`neighborR is ${neighborR} and neighbor C is ${neighborC}`);
 
         if(neighborR < 0 || neighborC < 0){
-            console.log("escaped at 1");
+            //console.log("escaped at 1");
             continue;
         }
 
         if(neighborR >= row || neighborC >= col){
-            console.log("escaped at 2");
+            //console.log("escaped at 2");
             continue;
         }
 
         if (visited[neighborC][neighborR] == true) {
-            console.log("escaped at 3");
+            //console.log("escaped at 3");
             continue;
         }
 
@@ -149,8 +150,10 @@ function exploreNeighbor (r, c){
 
         nextRow.enqueue(neighborR);
         nextCol.enqueue(neighborC);
-        console.log(`next Row queued up is ${nextRow.head.val}`);
+        //console.log(`next Row queued up is ${nextRow.head.val}`);
         visited[neighborC][neighborR]= true;
+
+        arrayColorize.push(xYtoID(neighborC,neighborR));//memory of the order at which nodes were visited
 
         nodesNext++;
     }
