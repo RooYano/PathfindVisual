@@ -100,8 +100,7 @@ function findPath(){
         c = nextCol.dequeue();
         //console.log(nextRow.size);
         //console.log(`R is ${r} and c is ${c} and m[c][r] gives ${m[c][r]}`);
-        if (m[c][r]  == 'End') {
-            reachedEnd = true;
+        if (reachedEnd==true) {
             //console.log("end reached");
             break;
         }
@@ -116,7 +115,7 @@ function findPath(){
     
     if(reachedEnd==true){
             //console.log("reachedEnd container");
-            colorEndNode();
+            recolorEndNode(targetNode);
 
             return totalMoves;
     }
@@ -128,6 +127,10 @@ function exploreNeighbor (r, c){
     for (let i = 0; i < 4; i++) {
         neighborR = r + deltaRow[i];
         neighborC = c + deltaCol[i];
+        if (xYtoID(neighborC,neighborR) == targetNode){
+            reachedEnd = true;
+            break;
+        }
         //console.log(`neighborR is ${neighborR} and neighbor C is ${neighborC}`);
 
         if(neighborR < 0 || neighborC < 0){

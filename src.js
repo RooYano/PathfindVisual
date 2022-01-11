@@ -1,3 +1,4 @@
+
 var container = document.getElementById("container");
 let availRows, availCols;
 
@@ -16,7 +17,7 @@ function makeGrid (rows, cols) {
         //cell.innerText = (i + 1);
     container.appendChild(cell).className = "grid-item";
     }
-}
+} 
 
 // returns array with x and y coordinate [x,y] using ID value
 let coordinate = [];
@@ -35,8 +36,12 @@ function xYtoID(x,y){
     return id;
 }
 
+function recolorEndNode(target){
+    document.getElementById(target).style.backgroundColor = "yellow";
+}
+
 let startNode = 50;
-let targetNode = 100;
+let targetNode = 160; 
 
 makeGrid(availRows,availCols);
 
